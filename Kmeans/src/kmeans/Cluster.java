@@ -62,14 +62,10 @@ public class Cluster {
             }
         }
         
-        maxDist = (float)Math.sqrt(maxDist);
-        Vector2 m12 = Vector2.sub(m2, m1, new Vector2());
-        m12.normalize();
-        m12.mul(maxDist / 2);
-        center.set(m1);
-        Vector2.add(center, m12, center);
         
         
+        center = Vector2.add(m1, m2, center).mul(0.5f);
+        radius = (float)Math.sqrt(maxDist) / 2;        
     }
     
     

@@ -16,8 +16,11 @@ public class Vector2 {
     }
 
     public Vector2(float X, float Y) {
-        this.X = X;
-        this.Y = Y;
+        set(X, Y);
+    }
+    
+    public Vector2(Vector2 v) {
+        set(v);
     }
     
     public Vector2 set(float X, float Y) {
