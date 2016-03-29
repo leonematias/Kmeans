@@ -59,13 +59,6 @@ public class UI {
     
     public UI() {
         kmeans = new Kmeans();
-        points = new ArrayList<ScreenPoint>(POINTS_COUNT);
-        Random rand = new Random();
-        for (int i = 0; i < POINTS_COUNT; i++) {
-            int x = 50 + rand.nextInt(WIN_WIDTH - 200);
-            int y = 50 + rand.nextInt(WIN_HEIGHT - 200);
-            points.add(new ScreenPoint(new Vector2(x, y)));
-        }
         
         normalStroke = new BasicStroke();
         edgeStroke = new BasicStroke(2);
@@ -110,6 +103,19 @@ public class UI {
     }
     
     /**
+     * Init graphics
+     */
+    private void init() {
+        points = new ArrayList<ScreenPoint>(POINTS_COUNT);
+        Random rand = new Random();
+        for (int i = 0; i < POINTS_COUNT; i++) {
+            int x = rand.nextInt(graphDim.width);
+            int y = rand.nextInt(graphDim.height);
+            points.add(new ScreenPoint(new Vector2(x, y)));
+        }
+    }
+    
+    /**
      * Main render method
      */
     private void render(Graphics2D g) {
@@ -150,6 +156,7 @@ public class UI {
      */
     private void computeClusters() {
         int clustersCount = ((SpinnerNumberModel)spinner.getModel()).getNumber().intValue();
+        /*
         int clusterDist = graphDim.width / clustersCount;
         int y = graphDim.height / 2;
         
@@ -158,12 +165,14 @@ public class UI {
             centers.add(new Vector2(i * clusterDist, y));
         }
         
+        */
+        
         List<Vector2> pList = new ArrayList<Vector2>(points.size());
         for (ScreenPoint p : points) {
             pList.add(p.p);
         }
         
-        clusters = kmeans.findClusters(centers, pList);
+        clusters = kmeans.findClusters(pList, new Vector2(0, 0), new Vector2(graphDim.width, graphDim.height));
         renderPanel.repaint();
     }
     
@@ -197,6 +206,7 @@ public class UI {
                 graphDim = getSize();
                 renderImg = (BufferedImage)createImage(graphDim.width, graphDim.height);
                 renderG = renderImg.createGraphics();
+                init();
             }
             
             renderG.setPaint(Color.WHITE);

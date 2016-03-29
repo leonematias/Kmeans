@@ -43,9 +43,11 @@ public class Cluster {
         if(points.size() == 0) return;
         if(points.size() == 1) {
             this.center.set(points.get(0));
+            this.radius = 0;
+            return;
         }
         
-        float maxDist = 0;
+        float maxDist = -1;
         Vector2 m1 = null;
         Vector2 m2 = null;
         for (int i = 0; i < points.size(); i++) {
